@@ -3,12 +3,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div id="root"></div>
-    </tfoot>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+
+    <script type="text/babel">
+
+      function Title() {
+        return <h1 className="title" >Hello, React!</h1>;
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        <React.Fragment>
+          <Title />
+          <p>Powered by JavaScript XML</p>
+        </React.Fragment>
+      );
+    </script>
   </body>
 </html>
