@@ -3,6 +3,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Calculator</title>
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body>
     <div id="root"></div>
@@ -11,15 +12,27 @@
     <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
 
     <script type="text/babel">
-      function Button() {
-        return <button>Click Me!</button>;
-      }
+    const buttonVariants = {
+      blue: 'bg-blue-500',
+      black: 'bg-black',
+    };
+
+    function Button({children, variant='blue', ...props}) {
+      return (
+        <button className={`${buttonVariants[variant]} text-white font-bold py-1 px-4 m-4 rounded`} {...props}>
+          {children}
+        </button>
+      );
+    }
 
       function App() {
         return <>
-          <h1>Simple Calculator</h1>
+          <h1 className="text-3xl font-bold underline">
+            Hello, React!
+          </h1>
           <p>Powered by JavaScript XML</p>
-          <Button />
+          <Button>Log In</Button>
+          <Button variant="black">Sign Up</Button>
         </>;
       }
 
