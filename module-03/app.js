@@ -69,7 +69,25 @@ const buttosList = [
   {label: '=', variant: 'primary'},
 ];
 
-function CalculatorKeyboard({handlerOperation, handlerResult, ...props}) {
+const CalculatorContext = React.createContext();
+
+function CaclculatorProvider({children}) {
+  const [history, setHistory] = React.useState([]);
+
+  function addHistory(operation, result) {
+    setHistory(prev => [...prev, `${operation} = ${result}`]);
+  }
+
+  return (
+    <CalculatorContext.Provider value={{history, addHistory}}>
+      {children}
+    </CalculatorContext.Provider>
+  )
+}
+
+function CalculatorKeyboard({handlerOperation, handlerResult, handlerHistory,...props}) {
+  const { addHistory } = React.useContext(CalculatorContext);
+
   return (
     <div className="grid grid-cols-4 gap-2" {...props}>
       {buttosList.map((button, index) => (
@@ -82,17 +100,23 @@ function CalculatorKeyboard({handlerOperation, handlerResult, ...props}) {
               handlerResult(0);
               return '';
             }
-            if (button.label === 'CS') return prev.slice(0, -1);
+            if (button.label === 'CE') return prev.slice(0, -1);
             if (button.label === '=') {
               try {
-                handlerResult(eval(prev));
+                if (prev) {
+                  handlerResult(eval(prev));
+                  addHistory(prev, eval(prev));
+                }
               } catch (error) {
-                handlerResult('Synstax ERROR');
+                handlerResult('Syntax ERROR');
+                console.error('Error in eval(): ', error);
               }
               return prev;
             }
-            if (button.label === '.' && !prev.endsWith('.'))
+            if (button.label === '.' && !(prev.endsWith('.')))
               return prev + button.label;
+            else if (button.label === '.' && prev.endsWith('.'))
+              return prev;
             return prev + (isNaN(Number(button.label)) ? ` ${button.label} ` : button.label);
           })}
         >
@@ -120,23 +144,26 @@ function CalculatorDisplay({operation, result}) {
 function Calculator() {
   const [result, setResult] = React.useState(0);
   const [operation, setOperation] = React.useState('');
-  const [history, setHistory] = React.useState([]);
+  const {history, addHistory} = React.useContext(CalculatorContext);
 
   return (
     <Card className="flex flex-col gap-[1.625rem] w-[22.75rem] py-12 px-8">
-      <CalculatorDisplay operation={operation} result={result} />
-      <CalculatorKeyboard handlerOperation={setOperation} handlerResult={setResult}/>
+        <CalculatorDisplay operation={operation} result={result} />
+        <CalculatorKeyboard handlerOperation={setOperation} handlerResult={setResult}/>
     </Card>
   );
 }
 
 function CalculatorHistory() {
+  const {history} = React.useContext(CalculatorContext);
+
   return (
-    <Card className="flex flex-col gap-6 py-12 px-8 w-128">
+    <Card className="flex flex-col gap-6 py-12 px-8 w-[22.75rem]">
       <Text as='h1' variant="heading" className="underline">History</Text>
       <ul className="flex flex-col gap-3 list-none pl-4 m-0">
-        <Text as='li' className="flex items-center justify-between">2 + 3 = 5</Text>
-        <Text as='li' className="flex items-center justify-between">1 x 4 - 7 = -3</Text>
+        { history.map((item, index) => (
+          <Text as='li' key={item + index} className="flex items-center justify-between">{item}</Text>
+        ))}
       </ul>
     </Card>
   );
@@ -146,8 +173,10 @@ function CalculatorHistory() {
 function App() {
   return (
     <main className={`flex flex-col sm:flex-row items-center sm:items-stretch sm:gap-3 ${textVariant.default} text-(--text) font-(--font-sans) py-28 px-4`}>
-      <Calculator />
-      <CalculatorHistory />
+      <CaclculatorProvider>
+        <Calculator />
+        <CalculatorHistory />
+      </CaclculatorProvider>
     </main> 
   );
 }
