@@ -84,7 +84,7 @@ function CalculatorDisplay() {
   );
 }
 
-function Calculator(params) {
+function Calculator() {
   return (
     <Card className="flex flex-col gap-[1.625rem] w-[22.75rem] py-12 px-8">
       <CalculatorDisplay />
@@ -93,10 +93,23 @@ function Calculator(params) {
   )
 }
 
+function CalculatorHistory() {
+  return (
+    <Card className="flex flex-col gap-6 py-12 px-8 w-128">
+      <Text as='h1' variant="heading" className="underline">History</Text>
+      <ul className="flex flex-col gap-3 list-none pl-4 m-0">
+        <Text as='li' className="flex items-center justify-between">2 + 3 = 5</Text>
+        <Text as='li' cassName="flex items-center justify-between">1 x 4 - 7 = -3</Text>
+      </ul>
+    </Card>
+  );
+}
+
 function App() {
   return (
-    <main className={`${textVariant.default} text-(--text) font-(--font-sans) py-28 px-4`}>
-     <Calculator />
+    <main className={`flex flex-col sm:flex-row items-center sm:items-stretch sm:gap-3 ${textVariant.default} text-(--text) font-(--font-sans) py-28 px-4`}>
+      <Calculator />
+      <CalculatorHistory />
     </main>
   );
 }
