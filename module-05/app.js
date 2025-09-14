@@ -67,7 +67,7 @@ function Form() {
     if (users.length > 0) {
       alert(`New user added: ${users[users.length - 1]}`);
     }
-  }, [users]);
+  }, [username]);
   
   return (
     <div className="bg-white px-8 pt-6 pb-8 mb-4 w-full">

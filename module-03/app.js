@@ -1,4 +1,3 @@
-
 const textVariant = {
   default: "text-xl",
   muted: "text-xl text-(--text-secondary)",
@@ -46,8 +45,6 @@ function Card({children, className, ...props}) {
   );
 }
 
-
-
 const buttosList = [
   {label: 'CE', variant: 'default'},
   {label: 'C', variant: 'default', className: 'col-span-2'},
@@ -73,9 +70,17 @@ const CalculatorContext = React.createContext();
 
 function CaclculatorProvider({children}) {
   const [history, setHistory] = React.useState([]);
+  const historyStorageKey = 'calculator-history';
 
   function addHistory(operation, result) {
-    setHistory(prev => [...prev, `${operation} = ${result}`]);
+    setHistory((prev) => {
+      const updateHistory = [...prev, `${operation} = ${result}`]
+    
+      let what = localStorage.setItem(historyStorageKey, JSON.stringify(updateHistory));
+      console.log(what);
+      alert('oi');
+      return updateHistory;
+    });
   }
 
   return (
