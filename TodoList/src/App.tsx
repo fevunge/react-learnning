@@ -1,6 +1,7 @@
 import Text from './components/Text';
 import Icon from './components/Icon';
 import Badge from './components/Bedge';
+import Button from './components/Button';
 import XIcon from './assets/icon/x.svg?react';
 import './App.css'
 
@@ -13,6 +14,7 @@ function App() {
         <Icon svg={XIcon} animate={false} className="fill-pink-base" />
         <Badge variant="secondary">55</Badge>
         <Badge>2 - 3</Badge>
+        <Button icon={XIcon}>Click Me</Button>
       </div>
     </>
   );
