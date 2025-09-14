@@ -1,11 +1,21 @@
+import Text from './components/Text';
+import Icon from './components/Icon';
+import Badge from './components/Bedge';
+import XIcon from './assets/icon/x.svg?react';
+import './App.css'
+
+
 function App() {
   return (
     <>
-      <div className="text-red-500">
-        <p>Hello, Vite!</p>
+      <div className="text-red-500 flex gap-4">
+        <Text>Hello, Vite!</Text>
+        <Icon svg={XIcon} animate={false} className="fill-pink-base" />
+        <Badge variant="secondary">55</Badge>
+        <Badge>2 - 3</Badge>
       </div>
     </>
   );
 }
 
-export default App
+export default App;
