@@ -6,7 +6,7 @@ const buttonVariants = {
 function Input({label, type, ...props}) {
   return (
     <div className="m-4">
-      <label className="block text-gray-700 text-sm font-bold mb-2">
+      <label className="block text-gra+y-700 text-sm font-bold mb-2">
         {label}
       </label>
       <input type={type} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" {...props} />
@@ -39,7 +39,7 @@ function App() {
   return (
     <>
       <h1 className="font-medium text-2xl text-center my-4 font-bold">
-        Welcome to JSX World
+        Form Component JSX
       </h1>
       <Form />
     </>
